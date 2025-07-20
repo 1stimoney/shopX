@@ -12,6 +12,9 @@
       "distribution": "internal"
     },
     "production": {
+      "node": {
+        "packageManager": "yarn"
+      },
       "autoIncrement": true
     }
   },

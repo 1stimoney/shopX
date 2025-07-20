@@ -13,8 +13,7 @@
     },
     "production": {
       "autoIncrement": true,
-      "node": "16.20.0",
-      "packageManager": "yarn"
+      "node": "16.20.0"
     }
   },
   "submit": {

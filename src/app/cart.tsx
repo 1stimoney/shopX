@@ -12,6 +12,7 @@ import { useCartStore } from '../store/cart-store'
 import { StatusBar } from 'expo-status-bar'
 import { FontAwesome } from '@expo/vector-icons'
 import { createOrder, createOrderItem } from '../api/api'
+import { openStripeCheckout, setupStripePaymentSheet } from '../lib/stripe'
 
 type CartItemType = {
   id: number
@@ -87,6 +88,17 @@ export default function Cart() {
     const totalPrice = parseFloat(getTotalPrice())
 
     try {
+      await setupStripePaymentSheet(Math.floor(totalPrice * 100))
+
+      const result = await openStripeCheckout()
+
+      if (!result) {
+        Alert.alert(
+          'An error occurred while processing your payment. Please try again.'
+        )
+        return
+      }
+
       await createSupabaseOrder(
         { totalPrice },
         {
